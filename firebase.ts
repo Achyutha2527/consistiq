@@ -11,35 +11,29 @@ const firebaseConfig = {
 };
 
 // ✅ Prevent duplicate app error
-const app = !getApps().length
-  ? initializeApp(firebaseConfig)
-  : getApp();
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 const messaging = getMessaging(app);
 
-// 🔔 Ask permission + get token
-export const requestNotificationPermission = async () => {
+// ✅ Request notification permission
+export const requestPermission = async () => {
   try {
     const permission = await Notification.requestPermission();
 
     if (permission === "granted") {
       const token = await getToken(messaging, {
-        vapidKey: "BJ2JusZWt2WgMYEgSWhb8I_JR321piLnLnkVb2SyS3LpB8OWCZE_bJoSnYFw871nA0P3C42SR7SD07mdW0ldPFU",
-      });
+vapidKey: "BJ2JusZWt2WgMYEgSWhb8I_JR321piLnLnkVb2SyS3LpB8OWCZE_bJoSnYFw871nA0P3C42SR7SD07mdW0ldPFU",      });
 
-      console.log("🔥 TOKEN:", token);
-      return token;
+      console.log("✅ TOKEN:", token);
     } else {
       console.log("❌ Permission denied");
     }
   } catch (error) {
-    console.error("❌ Error:", error);
+    console.log("Error:", error);
   }
 };
 
-// 📩 Foreground messages
-export const onForegroundMessage = (callback: any) => {
-  onMessage(messaging, (payload) => {
-    callback(payload);
-  });
-};
+// ✅ Listen for foreground messages
+onMessage(messaging, (payload) => {
+  console.log("📩 Message received:", payload);
+});
