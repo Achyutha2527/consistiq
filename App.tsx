@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
-import BottomNav from "@/components/BottomNav";
 import InstallPrompt from "@/components/InstallPrompt";
 import NotificationBanner from "@/components/NotificationBanner";
 import AuthPage from "@/pages/AuthPage";
@@ -28,7 +27,6 @@ function AppRoutes() {
   );
 
   const isFocus = location.pathname.startsWith('/focus');
-  const showNav = !isFocus && location.pathname !== '/';
 
   return (
     <>
@@ -45,7 +43,6 @@ function AppRoutes() {
         <Route path="/settings" element={ <SettingsPage /> } />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {showNav && <BottomNav />}
       {user && <InstallPrompt />}
       {user && <NotificationBanner />}
     </>
