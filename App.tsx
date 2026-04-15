@@ -1,7 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
-import InstallPrompt from "@/components/InstallPrompt";
-import NotificationBanner from "@/components/NotificationBanner";
 import AuthPage from "@/pages/AuthPage";
 import Dashboard from "@/pages/Dashboard";
 import PlanCreation from "@/pages/PlanCreation";
@@ -43,8 +41,6 @@ function AppRoutes() {
         <Route path="/settings" element={ <SettingsPage /> } />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {user && <InstallPrompt />}
-      {user && <NotificationBanner />}
     </>
   );
 }
