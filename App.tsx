@@ -1,58 +1,44 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
-import Dashboard from "@/pages/Dashboard";
-import PlanCreation from "@/pages/PlanCreation";
-import ActiveTasks from "@/pages/ActiveTasks";
-import FocusMode from "@/pages/FocusMode";
-import HistoryPage from "@/pages/HistoryPage";
-import Leaderboard from "@/pages/Leaderboard";
-import FriendsPage from "@/pages/FriendsPage";
-import ProfilePage from "@/pages/ProfilePage";
-import SettingsPage from "@/pages/SettingsPage";
-import NotFound from "@/pages/NotFound";
+import { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { requestPermission } from "./firebase";
 
-const queryClient = new QueryClient();
-
-function AppRoutes() {
-  
-  const location = useLocation();
-
-  if (loading) return (
-    <div className="min-h-screen gradient-bg flex items-center justify-center">
-      <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-    </div>
-  );
-
-  const isFocus = location.pathname.startsWith('/focus');
+function Home() {
+  useEffect(() => {
+    requestPermission();
+  }, []);
 
   return (
-    <>
-      <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/plan" element={<PlanCreation /> } />
-        <Route path="/tasks" element={ <ActiveTasks />} />
-        <Route path="/focus/:taskId" element={ <FocusMode /> } />
-        <Route path="/history" element={ <HistoryPage />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="/friends" element={ <FriendsPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/settings" element={ <SettingsPage /> } />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>Home Page ✅</h1>
+      <p>Notifications enabled (check permission popup)</p>
+    </div>
   );
 }
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-  
-      
-      <BrowserRouter>
-        
-          <AppRoutes />
-      </BrowserRouter>
-  
-  </QueryClientProvider>
-);
+function Dashboard() {
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>Dashboard ✅</h1>
+    </div>
+  );
+}
 
-export default App;
+function NotFound() {
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>404 ❌ Page Not Found</h1>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
