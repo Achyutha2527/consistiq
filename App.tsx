@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
-import AuthPage from "@/pages/AuthPage";
 import Dashboard from "@/pages/Dashboard";
 import PlanCreation from "@/pages/PlanCreation";
 import ActiveTasks from "@/pages/ActiveTasks";
@@ -29,7 +28,6 @@ function AppRoutes() {
   return (
     <>
       <Routes>
-      <Route path="/" element={ <AuthPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/plan" element={<PlanCreation /> } />
         <Route path="/tasks" element={ <ActiveTasks />} />
